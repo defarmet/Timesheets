@@ -6,3 +6,6 @@ var config = {
 	storageBucket: "test-project-56ae5.appspot.com"
 };
 firebase.initializeApp(config);
+var db = firebase.database();
+
+$("#add-employee").on("click", add_employee);
