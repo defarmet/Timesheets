@@ -8,4 +8,13 @@ var config = {
 firebase.initializeApp(config);
 var db = firebase.database();
 
+function add_employee(e) {
+	e.preventDefault();
+
+	var name = $("employee-name").val().trim();
+	var role = $("employee-role").val().trim();
+	var start = $("employee-start").val().trim();
+	var rate = $("employee-rate").val().trim();
+}
+
 $("#add-employee").on("click", add_employee);
