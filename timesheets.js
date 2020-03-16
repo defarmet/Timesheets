@@ -11,10 +11,16 @@ var db = firebase.database();
 function add_employee(e) {
 	e.preventDefault();
 
-	var name = $("employee-name").val().trim();
-	var role = $("employee-role").val().trim();
-	var start = $("employee-start").val().trim();
-	var rate = $("employee-rate").val().trim();
+	var employee = {
+		name: $("employee-name").val().trim(),
+		role: $("employee-role").val().trim(),
+		start: $("employee-start").val().trim(),
+		rate: $("employee-rate").val().trim(),
+		date: firebase.database.ServerValue.TIMESTAMP,
+	};
+	db.ref().push(employee);
 }
 
+db.ref().on("child-added", function(){});
+db.ref().orderByChild("dateAdded").on("value", function(){});
 $("#add-employee").on("click", add_employee);
