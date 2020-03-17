@@ -7,6 +7,7 @@ var config = {
 };
 firebase.initializeApp(config);
 var db = firebase.database();
+moment.relativeTimeThreshold('M', 9999999999);
 
 function add_employee(e) {
 	e.preventDefault();
@@ -26,11 +27,12 @@ function write_data(snapshot) {
 	var name = $("<td>").text(data.name);
 	var role = $("<td>").text(data.role);
 	var start = $("<td>").text(data.start);
-	var months = moment(20000101).fromNow(true);
-	console.log(months);
+	var months_ago = moment(data.start, "MM-DD-YYYY").fromNow(true);
+	var months = $("<td>").text(parseInt(months_ago) - 1);
 	var rate = $("<td>").text(data.rate);
+	var total = $("<td>").text((parseInt(months_ago) - 1) * data.rate);
 	var row = $("<tr>");
-	row.append(name, role, start, rate);
+	row.append(name, role, start, months, rate, total);
 
 	$("#Employee-rows").append(row);
 }
