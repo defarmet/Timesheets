@@ -12,15 +12,28 @@ function add_employee(e) {
 	e.preventDefault();
 
 	var employee = {
-		name: $("employee-name").val().trim(),
-		role: $("employee-role").val().trim(),
-		start: $("employee-start").val().trim(),
-		rate: $("employee-rate").val().trim(),
+		name: $("#employee-name").val().trim(),
+		role: $("#employee-role").val().trim(),
+		start: $("#employee-start").val().trim(),
+		rate: $("#employee-rate").val().trim(),
 		date: firebase.database.ServerValue.TIMESTAMP,
 	};
 	db.ref().push(employee);
 }
 
-db.ref().on("child-added", function(){});
-db.ref().orderByChild("dateAdded").on("value", function(){});
+function write_data(snapshot) {
+	var data = snapshot.val();
+	var name = $("<td>").text(data.name);
+	var role = $("<td>").text(data.role);
+	var start = $("<td>").text(data.start);
+	var months = moment(20000101).fromNow(true);
+	console.log(months);
+	var rate = $("<td>").text(data.rate);
+	var row = $("<tr>");
+	row.append(name, role, start, rate);
+
+	$("#Employee-rows").append(row);
+}
+
 $("#add-employee").on("click", add_employee);
+db.ref().on("child_added", write_data);
